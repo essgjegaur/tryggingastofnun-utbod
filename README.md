@@ -1,1 +1,3 @@
 # tryggingastofnun-utbod
+
+npm install
