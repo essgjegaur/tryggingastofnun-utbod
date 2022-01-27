@@ -4,8 +4,8 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start-sc": "next start -p 8108",
-        "start": "next start",
+        "start": "next start -p 8108",
+        "start-web": "next start",
         "lint": "next lint",
         "format": "prettier --config ./.prettierrc --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
         "format:check": "prettier --config ./.prettierrc --check './**/*.{js,jsx,ts,tsx,css,md,json}'"
