@@ -9,7 +9,9 @@ for cicd to work these steps must work
 - npm run start -w=api // service url is localhost:8110/tr-api
 
 Url on staki-cloud
+
 https://birta.staki.is/tr-web
+
 https://birta.staki.is/tr-api
 
 additional steps, nice to have
