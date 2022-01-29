@@ -3,7 +3,7 @@ import {AppModule} from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  let port = 3001
+  let port = 8110 
   let prefix = '/tr-api'
   app.setGlobalPrefix(prefix)
   await app.listen(port)
