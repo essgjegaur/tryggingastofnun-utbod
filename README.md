@@ -14,7 +14,7 @@ https://birta.staki.is/tr-web
 
 https://birta.staki.is/tr-api
 
-additional steps, nice to have
+additional steps, work-in-progress...
 - npm run format:check --workspaces
 - npm run lint --workspaces
 - npm run test --workspaces --if-present
