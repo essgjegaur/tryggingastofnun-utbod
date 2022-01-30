@@ -1,7 +1,7 @@
 # Tryggingastofnun útboð.
 
 
-for cicd to work these steps must work
+for pipeline to work these steps must work
 - npm install
 - npm run build -w=web
 - npm run build -w=api
