@@ -12,6 +12,6 @@
   "license": "ISC",
   "private": true,
   "workspaces": [
-    "app/*"
+    "./app/*"
   ]
 }

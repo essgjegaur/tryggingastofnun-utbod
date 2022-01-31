@@ -1,0 +1,37 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Addresses {
+  Address: ID!
+  PostNumber: Float!
+}
+
+type UserModel {
+  kennitala: String!
+  name: String!
+  address: Addresses!
+  kyn: String!
+}
+
+type Query {
+  getusers: [UserModel!]!
+  getuser(kennitala: String!): UserModel!
+}
+
+type Mutation {
+  updateUser(input: UserModelInput!): UserModel!
+  addUser(input: UserModelInput!): UserModel!
+}
+
+input UserModelInput {
+  kennitala: String!
+  name: String!
+  address: AddressesInput!
+  kyn: String!
+}
+
+input AddressesInput {
+  Address: ID!
+  PostNumber: Float!
+}
