@@ -1,8 +1,10 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const withTreat = require('next-treat')()
+const withTM = require('next-transpile-modules')(['@island.is/ui'])
+
+module.exports = withTreat(
+  withTM({
     reactStrictMode: true,
     assetPrefix: '/tr-web',
-    basePath: '/tr-web'
-};
-
-module.exports = nextConfig;
+    basePath: '/tr-web',
+  }),
+)
