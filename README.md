@@ -1,20 +1,15 @@
 # Tryggingastofnun útboð.
 
 
-for pipeline to work these steps must work
+cd to app/web
+
 - npm install
-- npm run build -w=web
-- npm run build -w=api
-- npm run start -w=web // service url is localhost:8108/tr-web
-- npm run start -w=api // service url is localhost:8110/tr-api
+- npm run build
+- npm run start
 
-Url on staki-cloud
+for dev-mode
 
-https://birta.staki.is/tr-web
+- npm install
+- npm run dev
 
-https://birta.staki.is/tr-api
 
-additional steps, work-in-progress...
-- npm run format:check --workspaces
-- npm run lint --workspaces
-- npm run test --workspaces --if-present
