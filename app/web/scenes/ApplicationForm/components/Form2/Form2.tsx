@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Box, Text, Input, GridColumn, GridContainer, GridRow, Stack} from '@island.is/ui'
 import {Controller, Control} from 'react-hook-form'
 
@@ -7,6 +7,7 @@ interface PropTypes {
 }
 
 function Form2({control}: PropTypes): JSX.Element {
+  console.log(control)
   return (
     <>
       <Text variant="h2">Persónuupplýsingar</Text>
@@ -26,30 +27,36 @@ function Form2({control}: PropTypes): JSX.Element {
                       name={name}
                       label="Nafn"
                       backgroundColor="blue"
+                      disabled
                     />
                   )}
                 />
                 <Controller
                   control={control}
-                  name="TODOname"
-                  render={({field: {onChange, value, name}}) => (
-                    <Input
-                      onChange={onChange}
-                      required
-                      value={value}
-                      name={name}
-                      label="Heimili"
-                      backgroundColor="blue"
-                    />
-                  )}
+                  name="heimili"
+                  render={({field: {onChange, value, name}, formState: {errors}}) => {
+                    // console.log(errors)
+                    return (
+                      <Input
+                        onChange={onChange}
+                        required
+                        value={value}
+                        name={name}
+                        label="Heimili"
+                        backgroundColor="blue"
+                        // hasError={!errors}
+                        // errorMessage="Field is required"
+                      />
+                    )
+                  }}
                 />
                 <Controller
                   control={control}
-                  name="martialStatus"
+                  name="spouse"
                   render={({field: {onChange, value, name}}) => (
                     <Input
                       onChange={onChange}
-                      value={value}
+                      value={value === 'no' ? '-' : value}
                       name={name}
                       label="Maki"
                       backgroundColor="blue"
@@ -58,7 +65,7 @@ function Form2({control}: PropTypes): JSX.Element {
                 />
                 <Controller
                   control={control}
-                  name="kennitalaBarns"
+                  name="childrenNationalid"
                   render={({field: {onChange, value, name}}) => (
                     <Input
                       onChange={onChange}
@@ -75,7 +82,7 @@ function Form2({control}: PropTypes): JSX.Element {
               <Stack space={3}>
                 <Controller
                   control={control}
-                  name="kennitala"
+                  name="nationalid"
                   render={({field: {onChange, value, name}}) => (
                     <Input
                       name={name}
@@ -84,6 +91,7 @@ function Form2({control}: PropTypes): JSX.Element {
                       value={value}
                       label="Kennitala"
                       backgroundColor="blue"
+                      disabled
                     />
                   )}
                 />
@@ -103,7 +111,7 @@ function Form2({control}: PropTypes): JSX.Element {
                 />
                 <Controller
                   control={control}
-                  name="kennitalaMaka"
+                  name="spouseNationalid"
                   render={({field: {onChange, value, name}}) => (
                     <Input
                       onChange={onChange}
@@ -139,7 +147,6 @@ function Form2({control}: PropTypes): JSX.Element {
                     backgroundColor="blue"
                     label="Banki"
                     placeholder="0000"
-                    tooltip="some text"
                   />
                 )}
               />
@@ -192,7 +199,7 @@ function Form2({control}: PropTypes): JSX.Element {
               <Stack space={3}>
                 <Controller
                   control={control}
-                  name="TODOFarsími"
+                  name="gsm"
                   render={({field: {onChange, value, name}}) => (
                     <Input
                       onChange={onChange}
@@ -201,12 +208,13 @@ function Form2({control}: PropTypes): JSX.Element {
                       name={name}
                       label="Farsími"
                       backgroundColor="blue"
+                      disabled
                     />
                   )}
                 />
                 <Controller
                   control={control}
-                  name="TODONetfang"
+                  name="email"
                   render={({field: {onChange, value, name}}) => (
                     <Input
                       onChange={onChange}
@@ -224,7 +232,7 @@ function Form2({control}: PropTypes): JSX.Element {
               <Stack space={3}>
                 <Controller
                   control={control}
-                  name="TODOHeimasími"
+                  name="phone"
                   render={({field: {onChange, value, name}}) => (
                     <Input
                       onChange={onChange}
