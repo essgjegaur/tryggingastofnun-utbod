@@ -1,4 +1,4 @@
-# Tryggingastofnun útboð.
+# Tryggingastofnun útboð...
 
 
 cd to app/web
