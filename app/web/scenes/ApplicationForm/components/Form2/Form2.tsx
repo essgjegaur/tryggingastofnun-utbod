@@ -36,7 +36,7 @@ function Form2({control, user}: any): JSX.Element {
                         required
                         value={value}
                         name={name}
-                        label="Heimili"
+                        label="Heimilisfang"
                         backgroundColor="blue"
                         defaultValue={user?.home}
                       />

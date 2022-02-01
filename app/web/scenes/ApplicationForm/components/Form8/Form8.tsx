@@ -4,7 +4,7 @@ import {Box, Text, GridColumn, GridContainer, GridRow, Stack} from '@island.is/u
 function Form8({user}: any): JSX.Element {
   return (
     <>
-      <Text variant="h2">Yfirferð</Text>
+      <Text variant="h2">Yfirlit</Text>
       <Box paddingTop={5}>
         <GridContainer>
           <Stack space={5}>
@@ -148,7 +148,7 @@ function Form8({user}: any): JSX.Element {
                     <Text>{user?.tekjur2}</Text>
                   </Box>
                   <Box>
-                    <Text variant="h5">Lifeyrissjóðstekjur</Text>
+                    <Text variant="h5">Lífeyrissjóðstekjur</Text>
                     <Text>{user?.tekjur3} ISK</Text>
                   </Box>
                   <Box>
