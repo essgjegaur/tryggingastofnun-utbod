@@ -57,14 +57,13 @@ function ApplicationForm(): JSX.Element {
     const tempUser = users.find(user => user.gsm === context.token)
     setUser({...user, ...tempUser})
 
-    const {children, bankno, ...defaultValues} = tempUser as any
-    const bankNumber = bankno.split('-')
+    const bankNumber = tempUser?.bankno.split('-')
     reset({
-      ...defaultValues,
-      childrenNationalid: children[0],
-      bankNumber: bankNumber[0],
-      bankLedger: bankNumber[1],
-      bankCode: bankNumber[2],
+      ...tempUser,
+      childrenNationalid: tempUser?.children[0],
+      bankNumber: bankNumber && bankNumber[0],
+      bankLedger: bankNumber && bankNumber[1],
+      bankCode: bankNumber && bankNumber[2],
     })
   }, [context])
 
