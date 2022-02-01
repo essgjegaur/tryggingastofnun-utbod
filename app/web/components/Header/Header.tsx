@@ -9,12 +9,12 @@ import {Logo} from '../Logo'
 import {Navigation} from '../Navigation'
 
 import * as styles from './Header.treat'
+import {users} from '../../users'
 
 function Header(): JSX.Element | null {
   const context = useContext(AuthContext)
-  const user = {
-    name: 'Gunnar Gunnarsson',
-  }
+  const user = users.find(user => user.gsm === context.token)
+
   return (
     <Box height="full">
       <Content>
@@ -29,73 +29,75 @@ function Header(): JSX.Element | null {
           <Link href="/">
             <Logo width={160} />
           </Link>
-          <ModalBase
-            baseId="user-modal"
-            hideOnClickOutside
-            hideOnEsc
-            tabIndex={0}
-            removeOnClose
-            disclosure={
-              <Button variant="utility" icon="chevronDown">
-                <Hidden above="xs">
-                  <Avatar username={user.name} resize={true} />
-                </Hidden>
+          {user && (
+            <ModalBase
+              baseId="user-modal"
+              hideOnClickOutside
+              hideOnEsc
+              tabIndex={0}
+              removeOnClose
+              disclosure={
+                <Button variant="utility" icon="chevronDown">
+                  <Hidden above="xs">
+                    <Avatar username={user?.name} resize={true} />
+                  </Hidden>
 
-                <Hidden below="sm">{user.name}</Hidden>
-              </Button>
-            }
-          >
-            {({closeModal}: any) => (
-              <Box onClick={closeModal}>
-                <Box
-                  display="flex"
-                  className={styles.modal}
-                  justifyContent="flexEnd"
-                  paddingX={[4, 6, 8]}
-                  marginTop={5}
-                >
+                  <Hidden below="sm">{user?.name}</Hidden>
+                </Button>
+              }
+            >
+              {({closeModal}: any) => (
+                <Box onClick={closeModal}>
                   <Box
-                    background="white"
-                    onClick={e => {
-                      e.stopPropagation()
-                    }}
-                    padding={4}
-                    borderRadius="large"
+                    display="flex"
+                    className={styles.modal}
+                    justifyContent="flexEnd"
+                    paddingX={[4, 6, 8]}
+                    marginTop={5}
                   >
-                    <Stack space={4}>
-                      <Box display="flex" alignItems="center">
-                        <Avatar username={user.name} />
+                    <Box
+                      background="white"
+                      onClick={e => {
+                        e.stopPropagation()
+                      }}
+                      padding={4}
+                      borderRadius="large"
+                    >
+                      <Stack space={4}>
+                        <Box display="flex" alignItems="center">
+                          <Avatar username={user?.name} />
 
-                        <Box marginRight={4}>
-                          <Text variant="h4" as="h4">
-                            {user.name}
-                          </Text>
+                          <Box marginRight={4}>
+                            <Text variant="h4" as="h4">
+                              {user?.name}
+                            </Text>
+                          </Box>
                         </Box>
-                      </Box>
 
-                      <Hidden above="md">
-                        <Navigation onNavigate={closeModal} />
-                      </Hidden>
+                        <Hidden above="md">
+                          <Navigation onNavigate={closeModal} />
+                        </Hidden>
 
-                      <Box>
-                        <Button
-                          onClick={() => {
-                            console.log(context)
-                            context.logout()
-                          }}
-                          fluid
-                          icon="logOut"
-                          iconType="outline"
-                        >
-                          Útskrá
-                        </Button>
-                      </Box>
-                    </Stack>
+                        <Box>
+                          <Button
+                            onClick={() => {
+                              console.log(context)
+                              context.logout()
+                            }}
+                            fluid
+                            icon="logOut"
+                            iconType="outline"
+                          >
+                            Útskrá
+                          </Button>
+                        </Box>
+                      </Stack>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            )}
-          </ModalBase>
+              )}
+            </ModalBase>
+          )}
         </Box>
       </Content>
     </Box>

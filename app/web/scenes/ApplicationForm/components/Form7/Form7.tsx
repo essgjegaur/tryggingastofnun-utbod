@@ -1,29 +1,13 @@
 import React, {useState} from 'react'
-import {
-  Box,
-  Text,
-  Input,
-  GridColumn,
-  GridContainer,
-  GridRow,
-  Stack,
-  DatePicker,
-  InputFileUpload,
-  UploadFile,
-  ContentBlock,
-} from '@island.is/ui'
-import {Controller, Control} from 'react-hook-form'
+import {Box, Text, Input, Stack, InputFileUpload, UploadFile} from '@island.is/ui'
+import {Controller} from 'react-hook-form'
 
-interface PropTypes {
-  control: Control<any>
-}
-
-function Form7({control}: PropTypes): JSX.Element {
-  const [error, setError] = useState<string | undefined>(undefined)
-
-  const onChange = (newFiles: File[]) => {}
-
-  const remove = (fileToRemove: UploadFile) => {}
+function Form7({control, updateUser}: any): JSX.Element {
+  const [files, setFiles] = useState<UploadFile[]>([])
+  const onChange = (newFiles: File[]) => {
+    setFiles(newFiles)
+    updateUser({fileName: newFiles[0].name})
+  }
   return (
     <>
       <Text variant="h2">Fylgiskjöl</Text>
@@ -46,12 +30,12 @@ function Form7({control}: PropTypes): JSX.Element {
         </Box>
         <Box padding={[2, 2, 3]}>
           <InputFileUpload
-            fileList={[]}
+            fileList={files}
             header="Dragðu skjöl hingað til að hlaða upp"
             description="Tekið er við skjölum með endingu: .pdf, .docx"
             buttonLabel="Velja skjöl til að hlaða upp"
             onChange={onChange}
-            onRemove={remove}
+            onRemove={() => {}}
           />
         </Box>
       </Box>

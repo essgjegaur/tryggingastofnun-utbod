@@ -266,7 +266,7 @@ const countryList = [
   'Zimbabwe',
 ]
 
-function Form3({control, updateUser}: any): JSX.Element {
+function Form3({control, updateUser, user}: any): JSX.Element {
   const [control1, setControl1] = useState<boolean>()
   const [control2, setControl2] = useState<boolean>()
 
@@ -285,7 +285,7 @@ function Form3({control, updateUser}: any): JSX.Element {
                     setControl1(true)
                     updateUser({almennarField1: true})
                   }}
-                  checked={control1 === true}
+                  checked={user.almennarField1 === true || control1 === true}
                 />
               </Box>
               <RadioButton
@@ -294,7 +294,7 @@ function Form3({control, updateUser}: any): JSX.Element {
                   setControl1(false)
                   updateUser({almennarField1: false})
                 }}
-                checked={control1 === false}
+                checked={user.almennarField1 === false || control1 === false}
               />
             </Box>
           </Box>
@@ -308,7 +308,7 @@ function Form3({control, updateUser}: any): JSX.Element {
                     setControl2(true)
                     updateUser({almennarField2: true})
                   }}
-                  checked={control2 === true}
+                  checked={user.almennarField2 === true || control2 === true}
                 />
               </Box>
               <RadioButton
@@ -317,11 +317,11 @@ function Form3({control, updateUser}: any): JSX.Element {
                   setControl2(false)
                   updateUser({almennarField2: false})
                 }}
-                checked={control2 === false}
+                checked={user.almennarField2 === false || control2 === false}
               />
             </Box>
           </Box>
-          {control2 === true && (
+          {(user.almennarField2 === true || control2 === true) && (
             <Box marginTop={3}>
               <GridContainer>
                 <GridRow>
@@ -342,6 +342,7 @@ function Form3({control, updateUser}: any): JSX.Element {
                           required
                           value={value}
                           onChange={onChange}
+                          defaultValue={user?.land}
                         />
                       )}
                     />
@@ -354,6 +355,10 @@ function Form3({control, updateUser}: any): JSX.Element {
                       label="Frá"
                       placeholderText="Veldu dagsetningu"
                       required
+                      handleChange={almennarDateFrom => {
+                        updateUser({almennarDateFrom})
+                      }}
+                      selected={user?.almennarDateFrom}
                     />
                   </GridColumn>
                   <GridColumn span={['12/12', '12/12', '6/12', '6/12']}>
@@ -362,6 +367,10 @@ function Form3({control, updateUser}: any): JSX.Element {
                       label="Til"
                       placeholderText="Veldu dagsetningu"
                       required
+                      handleChange={almennarDateTo => {
+                        updateUser({almennarDateTo})
+                      }}
+                      selected={user?.almennarDateTo}
                     />
                   </GridColumn>
                 </GridRow>

@@ -1,5 +1,15 @@
 import React, {useEffect, useState} from 'react'
-import {SkeletonLoader, Box, Text, Stack, Accordion, AccordionItem, Table as T} from '@island.is/ui'
+import {
+  SkeletonLoader,
+  Box,
+  Text,
+  Stack,
+  Accordion,
+  AccordionItem,
+  Table as T,
+  LoadingDots,
+  LoadingIcon,
+} from '@island.is/ui'
 
 const monthlys: any[] = [
   {
@@ -209,11 +219,12 @@ const monthlys: any[] = [
 ]
 
 function Senda(): JSX.Element {
-  // const {data, loading} = useQuery<Query>(CalculationQuery)
-  // const {reikn} = data || {}
-  const [loading, setLoading] = useState()
-
-  useEffect(() => {}, [])
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
+  }, [])
 
   return (
     <>
@@ -229,7 +240,7 @@ function Senda(): JSX.Element {
       </Box>
       <Box marginTop={3}>
         {loading ? (
-          <SkeletonLoader height={400} />
+          <SkeletonLoader repeat={12} height={100} />
         ) : (
           <Accordion singleExpand>
             {monthlys.map((monthData, index) => (

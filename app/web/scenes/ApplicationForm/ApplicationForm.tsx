@@ -10,53 +10,14 @@ import {
   GridRow,
 } from '@island.is/ui'
 
-import {Form1, Form2, Form3, Form4, Form5, Form6, Form7, Form8, Senda, Summary} from './components'
-import {AuthContext} from '../../services'
+import {Form1, Form2, Form3, Form4, Form5, Form6, Form7, Form8, Senda} from './components'
 
 import * as styles from './ApplicationForm.treat'
 import {useRouter} from 'next/dist/client/router'
 
-const users = [
-  {
-    id: 1,
-    nationalid: '0101407789',
-    type: 'Réttindi erlendis. Ekki full greiðsla',
-    name: 'Hansína Ebenesardóttir',
-    home: '',
-    email: 'hansinae@gmail.com',
-    gsm: '855-1111',
-    phone: '5651111',
-    bankno: '0115-15-001111',
-    spouse: 'no',
-    children: [],
-  },
-  {
-    id: 2,
-    nationalid: '0101502989',
-    type: 'Full íslensk réttindi + heimilisuppbót',
-    name: 'Fimmsundtrýna Jafetsdóttir',
-    home: '',
-    email: '5sund@gmail.com',
-    gsm: '8552222',
-    phone: '5652222',
-    bankno: '0115-15-001112',
-    spouse: 'no',
-    children: ['1301022220'],
-  },
-  {
-    id: 3,
-    nationalid: '0101524929',
-    type: 'Full íslensk réttindi, á maka, ekki heimilisuppb + barn(barnalífeyrir)',
-    name: 'Jón Oddur Bjarnason',
-    home: '',
-    email: 'jonoddurbjarnason@gmail.com',
-    gsm: '8553333',
-    phone: '5653333',
-    bankno: '0115-15-001113',
-    spouse: 'Andrésína Jóakimsdóttir (170180-1239)',
-    children: ['1501102220'],
-  },
-]
+import {users} from '../../users'
+import {AuthContext} from '../../services'
+
 function ApplicationForm(): JSX.Element {
   const context = useContext(AuthContext)
   const router = useRouter()
@@ -69,7 +30,7 @@ function ApplicationForm(): JSX.Element {
   const userRef = useRef(user)
   const [activeSubSectionIndex, setActiveSubSectionIndex] = useState(0)
   const [activeSectionIndex, setActiveSectionIndex] = useState(0)
-  const {handleSubmit, control, reset, getValues, trigger, formState} = useForm<any>({
+  const {handleSubmit, control, reset, getValues} = useForm<any>({
     defaultValues: useMemo(() => user, [user]),
   })
 
@@ -107,10 +68,6 @@ function ApplicationForm(): JSX.Element {
     })
   }, [context])
 
-  useEffect(() => {
-    console.log('user', user)
-  }, [activeSectionIndex])
-
   const formName = 'Ellilífeyrir'
   const getNextIndexes = () => {
     const currentSection = forms[activeSectionIndex].section
@@ -126,15 +83,14 @@ function ApplicationForm(): JSX.Element {
   }
 
   const goNext = async () => {
-    const valid = await trigger()
-    console.log(formState)
     const updatedUser = {
       ...user,
+      step: user.step + 1,
       ...getValues(),
     }
     setUser(updatedUser)
 
-    // localStorage.setItem('user', JSON.stringify(updatedUser))
+    localStorage.setItem('user', JSON.stringify(updatedUser))
 
     const [index, subIndex] = getNextIndexes()
     setActiveSectionIndex(index)
@@ -143,7 +99,6 @@ function ApplicationForm(): JSX.Element {
 
   const goPrevious = () => {
     const currentSection = forms[activeSectionIndex].section
-    console.log(currentSection)
 
     if (!currentSection.name) {
       router.push('/')
@@ -168,7 +123,7 @@ function ApplicationForm(): JSX.Element {
 
   const forms = [
     {component: <Form1 control={control} />, section: {name: undefined}},
-    {component: <Form2 control={control} />, section: {name: 'Persónuupplýsingar'}},
+    {component: <Form2 control={control} user={user} />, section: {name: 'Persónuupplýsingar'}},
     {
       section: {
         name: 'Almennar upplýsingar',
@@ -176,48 +131,44 @@ function ApplicationForm(): JSX.Element {
           {
             type: 'SUB_SECTION',
             name: 'Búa/Starfa erlendis',
-            component: <Form3 control={control} updateUser={updateUser} />,
+            component: <Form3 control={control} updateUser={updateUser} user={user} />,
           },
           {
             type: 'SUB_SECTION',
             name: 'Annað',
-            component: <Form4 control={control} updateUser={updateUser} />,
+            component: <Form4 control={control} updateUser={updateUser} user={user} />,
           },
           {
             type: 'SUB_SECTION',
             name: 'Uppbót',
-            component: <Form5 control={control} updateUser={updateUser} />,
+            component: <Form5 control={control} updateUser={updateUser} user={user} />,
           },
         ],
       },
     },
-    {component: <Form6 control={control} />, section: {name: 'Tekjur'}},
-    {component: <Form7 control={control} />, section: {name: 'Fylgiskjöl'}},
-    {component: <Form8 control={control} />, section: {name: 'Yfirferð'}},
+    {
+      component: <Form6 control={control} user={user} updateUser={updateUser} />,
+      section: {name: 'Tekjur'},
+    },
+    {
+      component: <Form7 control={control} updateUser={updateUser} user={user} />,
+      section: {name: 'Fylgiskjöl'},
+    },
+    {component: <Form8 control={control} user={user} />, section: {name: 'Yfirferð'}},
     {component: <Senda />, section: {name: 'Senda'}},
   ]
 
   const handleOnSubmit = handleSubmit(async input => {
     const [index, subIndex] = getNextIndexes()
     const isSubmitting = index === activeSectionIndex && index === forms.length - 1
-    // const {data} = await updateApplication({
-    //   variables: {
-    //     input: {
-    //       ...input,
-    //       applicationStatus: isSubmitting ? 'done' : null,
-    //       step: index,
-    //       subStep: subIndex,
-    //       mobileNumber: user.mobileNumber,
-    //     },
-    //   },
-    // })
-    // if (data?.updateApplication) {
     if (isSubmitting) {
+      updateUser({applicationStatus: 'done'})
+      localStorage.setItem('user', JSON.stringify({...user, applicationStatus: 'done'}))
+
       router.push('/')
     } else {
       goNext()
     }
-    // }
   })
 
   const getSections = () =>
@@ -242,8 +193,6 @@ function ApplicationForm(): JSX.Element {
       return subSections[activeSubSectionIndex]?.component
     }
   }
-
-  // const getSubSectionsLength = () => forms[activeSectionIndex].section?.children?.length || 0
 
   return (
     <div className={styles.root}>
