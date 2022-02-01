@@ -278,15 +278,12 @@ function Senda({user}: any): JSX.Element {
                         </T.Data>
                         <T.Data>
                           <Stack space={1}>
-                            <Text variant="small">{monthData.lifeyrissjodur}</Text>
+                          <Text variant="small">{monthData.ellilífeyrir}</Text>
                             {monthData.heimilisuppbot && (
                               <Text variant="small">{monthData.heimilisuppbot}</Text>
                             )}
                             {monthData.barnalifeyrir && (
                               <Text variant="small">{monthData.barnalifeyrir}</Text>
-                            )}
-                            {monthData.ellilífeyrir && (
-                              <Text variant="small">{monthData.ellilífeyrir}</Text>
                             )}
                           </Stack>
                         </T.Data>
