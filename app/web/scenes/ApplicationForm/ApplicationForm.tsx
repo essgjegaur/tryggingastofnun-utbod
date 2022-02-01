@@ -153,7 +153,7 @@ function ApplicationForm(): JSX.Element {
       component: <Form7 control={control} updateUser={updateUser} user={user} />,
       section: {name: 'Fylgiskjöl'},
     },
-    {component: <Form8 control={control} user={user} />, section: {name: 'Yfirferð'}},
+    {component: <Form8 control={control} user={user} />, section: {name: 'Yfirlit'}},
     {component: <Senda user={user} />, section: {name: 'Senda'}},
   ]
 

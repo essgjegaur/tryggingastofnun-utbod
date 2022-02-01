@@ -62,7 +62,7 @@ function Form6({control, updateUser, user}: any): JSX.Element {
 
       <Box paddingTop={5}>
         <Box marginBottom={3}>
-          <Text variant="h5">Lifeyrissjóðstekjur</Text>
+          <Text variant="h5">Lífeyrissjóðstekjur</Text>
         </Box>
         <GridContainer>
           <GridRow>

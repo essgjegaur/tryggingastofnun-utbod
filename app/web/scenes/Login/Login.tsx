@@ -51,7 +51,7 @@ function Login(): JSX.Element {
             </Text>
             <Text variant="h1">Skráðu þig inn</Text>
             <Text variant="h3" fontWeight="light" color="dark400">
-              á Mínar síður Ísland.is
+              á Mínar síður Tryggingastofunar
             </Text>
           </Box>
 
@@ -78,7 +78,7 @@ function Login(): JSX.Element {
                       backgroundColor="blue"
                       onChange={onChange}
                       required
-                      errorMessage={!hasError ? '' : 'Símanúmer is wrong'}
+                      errorMessage={!hasError ? '' : 'Símanúmer er ekki til'}
                     />
                   )}
                 />

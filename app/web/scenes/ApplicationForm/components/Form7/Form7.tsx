@@ -14,7 +14,7 @@ function Form7({control, updateUser}: any): JSX.Element {
       <Box paddingTop={5}>
         <Box marginBottom={3}>
           <Text variant="h5">
-            Skjöl sem þarf að skila til Tryggingastofnunar eða umboða til að afgreiðsla á umsókn
+            Skjöl eða umboð sem þarf að skila til Tryggingastofnunar til að afgreiðsla á umsókn
             geti hafist:
           </Text>
         </Box>
@@ -23,7 +23,7 @@ function Form7({control, updateUser}: any): JSX.Element {
             <Text>Staðfesting frá Lífeyrissjóði</Text>
             <Text>
               Staðfesting á rétti/réttleysi hja lífeyrissjóðum (þarf ekki ef lífeyrisjóðsgreiðslur
-              eru hafnar eða gert fráð fyrir þeim í tekjuáætlun). Einnig önnur fylgiskjöl sem þú
+              eru hafnar eða gert ráð fyrir þeim í tekjuáætlun). Einnig önnur fylgiskjöl sem þú
               villt láta fylgja umsókninni.
             </Text>
           </Stack>
@@ -31,7 +31,7 @@ function Form7({control, updateUser}: any): JSX.Element {
         <Box padding={[2, 2, 3]}>
           <InputFileUpload
             fileList={files}
-            header="Dragðu skjöl hingað til að hlaða upp"
+            header="Dragðu skjöl hingað til að hlaða þeim upp"
             description="Tekið er við skjölum með endingu: .pdf, .docx"
             buttonLabel="Velja skjöl til að hlaða upp"
             onChange={onChange}
