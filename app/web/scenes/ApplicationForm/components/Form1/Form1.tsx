@@ -16,16 +16,16 @@ function Form1({control}: PropTypes): JSX.Element {
         <Stack space={3}>
           <Box>
             <Text variant="h5" color="blue400">
-              Tryggingastofnun ríkisins
+              Skatturinn
             </Text>
-            <Text>Upplýsingar um örorkumat (stöðu)</Text>
-            <Text>Upplýsingar um greiðslur vegna örorku (stöðu)</Text>
+            <Text>Upplýsingar um skattgreiðslur (mán/ár)</Text>
+            <Text>Upplýsingar um umsækjanda</Text>
           </Box>
 
           <Box>
-            <Text>Nánari upplýsingar um vinnslu persónuupplýsinga hjá Vinnumálastofnun</Text>
+            <Text>Nánari upplýsingar um vinnslu persónuupplýsinga hjá Tryggingastofnun rikisins</Text>
             <Link href="">
-              <span className={styles.link}>Persónuverndarsíða Vinnumálastofu</span>
+              <span className={styles.link}>Persónuverndarsíða Tryggingastofnunar</span>
             </Link>
           </Box>
 

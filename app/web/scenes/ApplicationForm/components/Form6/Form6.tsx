@@ -1,21 +1,8 @@
 import React from 'react'
-import {
-  Box,
-  Text,
-  Input,
-  GridColumn,
-  GridContainer,
-  GridRow,
-  Stack,
-  DatePicker,
-} from '@island.is/ui'
-import {Controller, Control} from 'react-hook-form'
+import {Box, Text, Input, GridColumn, GridContainer, GridRow, DatePicker} from '@island.is/ui'
+import {Controller} from 'react-hook-form'
 
-interface PropTypes {
-  control: Control<any>
-}
-
-function Form6({control}: PropTypes): JSX.Element {
+function Form6({control, updateUser, user}: any): JSX.Element {
   return (
     <>
       <Text variant="h2">Tekjur</Text>
@@ -28,11 +15,11 @@ function Form6({control}: PropTypes): JSX.Element {
             <GridColumn span={['12/12', '12/12', '6/12', '6/12']} paddingBottom={3}>
               <Controller
                 control={control}
-                name="name1"
+                name="tekjur1"
                 render={({field: {onChange, value, name}}) => (
                   <Input
                     onChange={onChange}
-                    value={0}
+                    value={value}
                     name={name}
                     label="Upphæð á mánuði"
                     backgroundColor="blue"
@@ -56,11 +43,11 @@ function Form6({control}: PropTypes): JSX.Element {
             <GridColumn span={['12/12', '12/12', '6/12', '6/12']} paddingBottom={3}>
               <Controller
                 control={control}
-                name="name1"
+                name="tekjur2"
                 render={({field: {onChange, value, name}}) => (
                   <Input
                     onChange={onChange}
-                    value={0}
+                    value={value}
                     name={name}
                     label="Upphæð á mánuði"
                     backgroundColor="blue"
@@ -82,11 +69,11 @@ function Form6({control}: PropTypes): JSX.Element {
             <GridColumn span={['12/12', '12/12', '6/12', '6/12']} paddingBottom={3}>
               <Controller
                 control={control}
-                name="name2"
+                name="tekjur3"
                 render={({field: {onChange, value, name}}) => (
                   <Input
                     onChange={onChange}
-                    value={0}
+                    value={value}
                     name={name}
                     label="Upphæð"
                     backgroundColor="blue"
@@ -106,17 +93,15 @@ function Form6({control}: PropTypes): JSX.Element {
         <GridContainer>
           <GridRow>
             <GridColumn span={['12/12', '12/12', '6/12', '6/12']} paddingBottom={3}>
-              <Controller
-                control={control}
-                name="name3"
-                render={({field: {onChange, value, name}}) => (
-                  <DatePicker
-                    label="Dagsetning"
-                    placeholderText="Veldu dagsetningu"
-                    backgroundColor="blue"
-                    required
-                  />
-                )}
+              <DatePicker
+                label="Dagsetning"
+                placeholderText="Veldu dagsetningu"
+                backgroundColor="blue"
+                required
+                handleChange={tekjur4 => {
+                  updateUser({tekjur4})
+                }}
+                selected={user?.tekjur4}
               />
             </GridColumn>
           </GridRow>

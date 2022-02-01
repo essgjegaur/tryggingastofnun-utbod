@@ -1,13 +1,8 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Box, Text, Input, GridColumn, GridContainer, GridRow, Stack} from '@island.is/ui'
-import {Controller, Control} from 'react-hook-form'
+import {Controller} from 'react-hook-form'
 
-interface PropTypes {
-  control: Control<any>
-}
-
-function Form2({control}: PropTypes): JSX.Element {
-  console.log(control)
+function Form2({control, user}: any): JSX.Element {
   return (
     <>
       <Text variant="h2">Persónuupplýsingar</Text>
@@ -33,9 +28,8 @@ function Form2({control}: PropTypes): JSX.Element {
                 />
                 <Controller
                   control={control}
-                  name="heimili"
+                  name="home"
                   render={({field: {onChange, value, name}, formState: {errors}}) => {
-                    // console.log(errors)
                     return (
                       <Input
                         onChange={onChange}
@@ -44,8 +38,7 @@ function Form2({control}: PropTypes): JSX.Element {
                         name={name}
                         label="Heimili"
                         backgroundColor="blue"
-                        // hasError={!errors}
-                        // errorMessage="Field is required"
+                        defaultValue={user?.home}
                       />
                     )
                   }}
@@ -60,6 +53,7 @@ function Form2({control}: PropTypes): JSX.Element {
                       name={name}
                       label="Maki"
                       backgroundColor="blue"
+                      defaultValue={user?.spouse}
                     />
                   )}
                 />
@@ -73,6 +67,7 @@ function Form2({control}: PropTypes): JSX.Element {
                       name={name}
                       label="Kennitala Barns"
                       backgroundColor="blue"
+                      defaultValue={user?.childrenNationalid}
                     />
                   )}
                 />
@@ -106,6 +101,7 @@ function Form2({control}: PropTypes): JSX.Element {
                       name={name}
                       label="Póstnúmer"
                       backgroundColor="blue"
+                      defaultValue={user?.postNumber}
                     />
                   )}
                 />
@@ -119,6 +115,7 @@ function Form2({control}: PropTypes): JSX.Element {
                       name={name}
                       label="Kennitala Maka"
                       backgroundColor="blue"
+                      defaultValue={user?.spouseNationalid}
                     />
                   )}
                 />

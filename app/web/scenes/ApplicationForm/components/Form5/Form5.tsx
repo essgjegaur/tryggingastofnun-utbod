@@ -4,19 +4,14 @@ import {
   Text,
   Stack,
   RadioButton,
-  Tooltip,
-  Inline,
   GridColumn,
   GridContainer,
   GridRow,
-  Select,
-  DatePicker,
   Input,
-  Divider,
 } from '@island.is/ui'
 import {Controller} from 'react-hook-form'
 
-function Form5({control}: any): JSX.Element {
+function Form5({control, updateUser, user}: any): JSX.Element {
   // first
   const [control1, setControl1] = useState<boolean>()
   const [control2, setControl2] = useState<boolean>()
@@ -38,18 +33,24 @@ function Form5({control}: any): JSX.Element {
                 <Box marginRight={4}>
                   <RadioButton
                     label="Já"
-                    onChange={() => setControl1(true)}
-                    checked={control1 === true}
+                    onChange={() => {
+                      updateUser({almennarField5: true})
+                      setControl1(true)
+                    }}
+                    checked={user.almennarField5 === true || control1 === true}
                   />
                 </Box>
                 <RadioButton
                   label="Nei"
-                  onChange={() => setControl1(false)}
-                  checked={control1 === false}
+                  onChange={() => {
+                    updateUser({almennarField5: false})
+                    setControl1(false)
+                  }}
+                  checked={user.almennarField5 === false || control1 === false}
                 />
               </Box>
             </Box>
-            {control1 === true && (
+            {(user.almennarField5 === true || control1 === true) && (
               <>
                 <Box display="flex" justifyContent="spaceBetween">
                   <Text variant="h5">Ertu á leigumarkaði?</Text>
@@ -57,14 +58,20 @@ function Form5({control}: any): JSX.Element {
                     <Box marginRight={4}>
                       <RadioButton
                         label="Já"
-                        onChange={() => setControl2(true)}
-                        checked={control2 === true}
+                        onChange={() => {
+                          updateUser({almennarField6: true})
+                          setControl2(true)
+                        }}
+                        checked={user.almennarField6 === true || control2 === true}
                       />
                     </Box>
                     <RadioButton
                       label="Nei"
-                      onChange={() => setControl2(false)}
-                      checked={control2 === false}
+                      onChange={() => {
+                        updateUser({almennarField6: false})
+                        setControl2(false)
+                      }}
+                      checked={user.almennarField6 === false || control2 === false}
                     />
                   </Box>
                 </Box>
@@ -76,20 +83,26 @@ function Form5({control}: any): JSX.Element {
                     <Box marginRight={4}>
                       <RadioButton
                         label="Já"
-                        onChange={() => setControl3(true)}
-                        checked={control3 === true}
+                        onChange={() => {
+                          updateUser({almennarField7: true})
+                          setControl3(true)
+                        }}
+                        checked={user.almennarField7 === true || control3 === true}
                       />
                     </Box>
                     <RadioButton
                       label="Nei"
-                      onChange={() => setControl3(false)}
-                      checked={control3 === false}
+                      onChange={() => {
+                        updateUser({almennarField7: false})
+                        setControl3(false)
+                      }}
+                      checked={user.almennarField7 === false || control3 === false}
                     />
                   </Box>
                 </Box>
               </>
             )}
-            {control3 === true && (
+            {(user.almennarField7 === true || control3 === true) && (
               <Box marginTop={2}>
                 <GridContainer>
                   <GridRow>
@@ -105,6 +118,7 @@ function Form5({control}: any): JSX.Element {
                             name={name}
                             label="Kennitala ungmennis"
                             backgroundColor="blue"
+                            defaultValue={user.kennitalaUgmennis}
                           />
                         )}
                       />
@@ -122,40 +136,52 @@ function Form5({control}: any): JSX.Element {
                 <Box marginRight={4}>
                   <RadioButton
                     label="Já"
-                    onChange={() => setControl4(true)}
-                    checked={control4 === true}
+                    onChange={() => {
+                      updateUser({almennarField8: true})
+                      setControl4(true)
+                    }}
+                    checked={user.almennarField8 === true || control4 === true}
                   />
                 </Box>
 
                 <RadioButton
                   label="Nei"
-                  onChange={() => setControl4(false)}
-                  checked={control4 === false}
+                  onChange={() => {
+                    updateUser({almennarField8: false})
+                    setControl4(false)
+                  }}
+                  checked={user.almennarField8 === false || control4 === false}
                 />
               </Box>
             </Box>
-            {control4 === true && (
+            {(user.almennarField8 === true || control4 === true) && (
               <Box display="flex" justifyContent="spaceBetween">
                 <Text variant="h5">Býr barn hjá umsækjanda?</Text>
                 <Box display="flex" justifyContent="spaceBetween">
                   <Box marginRight={4}>
                     <RadioButton
                       label="Já"
-                      onChange={() => setControl5(true)}
-                      checked={control5 === true}
+                      onChange={() => {
+                        updateUser({almennarField9: true})
+                        setControl5(true)
+                      }}
+                      checked={user.almennarField9 === true || control5 === true}
                     />
                   </Box>
 
                   <RadioButton
                     label="Nei"
-                    onChange={() => setControl5(false)}
-                    checked={control5 === false}
+                    onChange={() => {
+                      updateUser({almennarField9: false})
+                      setControl5(false)
+                    }}
+                    checked={user.almennarField9 === false || control5 === false}
                   />
                 </Box>
               </Box>
             )}
 
-            {control5 === true && (
+            {(user.almennarField9 === true || control5 === true) && (
               <Box marginTop={2}>
                 <GridContainer>
                   <GridRow>
@@ -171,6 +197,7 @@ function Form5({control}: any): JSX.Element {
                             name={name}
                             label="Kennitala barns"
                             backgroundColor="blue"
+                            defaultValue={user.kennitalaBarns}
                           />
                         )}
                       />
@@ -187,15 +214,21 @@ function Form5({control}: any): JSX.Element {
               <Box marginRight={4}>
                 <RadioButton
                   label="Já"
-                  onChange={() => setControl6(true)}
-                  checked={control6 === true}
+                  onChange={() => {
+                    updateUser({almennarField10: true})
+                    setControl6(true)
+                  }}
+                  checked={user.almennarField10 === true || control6 === true}
                 />
               </Box>
 
               <RadioButton
                 label="Nei"
-                onChange={() => setControl6(false)}
-                checked={control6 === false}
+                onChange={() => {
+                  updateUser({almennarField10: false})
+                  setControl6(false)
+                }}
+                checked={user.almennarField10 === false || control6 === false}
               />
             </Box>
           </Box>

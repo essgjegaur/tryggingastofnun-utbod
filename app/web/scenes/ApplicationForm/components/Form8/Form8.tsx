@@ -1,12 +1,7 @@
 import React from 'react'
-import {Box, Text, Input, GridColumn, GridContainer, GridRow, Stack} from '@island.is/ui'
-import {Controller, Control} from 'react-hook-form'
+import {Box, Text, GridColumn, GridContainer, GridRow, Stack} from '@island.is/ui'
 
-interface PropTypes {
-  control: Control<any>
-}
-
-function Form8({control}: PropTypes): JSX.Element {
+function Form8({user}: any): JSX.Element {
   return (
     <>
       <Text variant="h2">Yfirferð</Text>
@@ -18,19 +13,19 @@ function Form8({control}: PropTypes): JSX.Element {
                 <Stack space={3}>
                   <Box>
                     <Text variant="h5">Umsækjandi</Text>
-                    <Text>Guðrún Jónsdóttir</Text>
+                    <Text>{user?.name}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Heimilisfang</Text>
-                    <Text>Lindargata 3</Text>
+                    <Text>{user?.home}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Farsími</Text>
-                    <Text>855111</Text>
+                    <Text>{user?.gsm}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Maki</Text>
-                    <Text>Nei</Text>
+                    <Text>{user?.spouse === 'no' ? 'Nei' : 'Já'}</Text>
                   </Box>
                 </Stack>
               </GridColumn>
@@ -38,19 +33,19 @@ function Form8({control}: PropTypes): JSX.Element {
                 <Stack space={3}>
                   <Box>
                     <Text variant="h5">Kennitala</Text>
-                    <Text>170694-1119</Text>
+                    <Text>{user?.nationalid}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Póstnúmer</Text>
-                    <Text>101</Text>
+                    <Text>{user?.postNumber}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Heimasími</Text>
-                    <Text>5651111</Text>
+                    <Text>{user?.phone}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Börn</Text>
-                    <Text>Nei</Text>
+                    <Text>{user?.childrenNationalId || 'Nei'}</Text>
                   </Box>
                 </Stack>
               </GridColumn>
@@ -60,11 +55,11 @@ function Form8({control}: PropTypes): JSX.Element {
                 <Stack space={3}>
                   <Box>
                     <Text variant="h5">Hefur þú kannað rétt þinn hjá lífeyrissjóðum?</Text>
-                    <Text>Já</Text>
+                    <Text>{user?.almennarField1 === false ? 'Nei' : 'Já'}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Hefurðu búið og/eða starfað erlendis?</Text>
-                    <Text>Já</Text>
+                    <Text>{user?.almennarField2 === false ? 'Nei' : 'Já'}</Text>
                   </Box>
                 </Stack>
               </GridColumn>
@@ -74,7 +69,7 @@ function Form8({control}: PropTypes): JSX.Element {
                 <Stack space={3}>
                   <Box>
                     <Text variant="h5">Land</Text>
-                    <Text>Angóla</Text>
+                    <Text>{user?.land?.value || 'Nei'}</Text>
                   </Box>
                 </Stack>
               </GridColumn>
@@ -82,7 +77,19 @@ function Form8({control}: PropTypes): JSX.Element {
                 <Stack space={3}>
                   <Box>
                     <Text variant="h5">Tímabil</Text>
-                    <Text>01/01/1990 - 01/06/2000</Text>
+                    <Text>
+                      {user?.almennarDateFrom?.toLocaleDateString('en-US', {
+                        day: 'numeric',
+                        month: 'numeric',
+                        year: 'numeric',
+                      })}
+                      {' - '}
+                      {user?.almennarDateTo?.toLocaleDateString('en-US', {
+                        day: 'numeric',
+                        month: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </Text>
                   </Box>
                 </Stack>
               </GridColumn>
@@ -92,19 +99,19 @@ function Form8({control}: PropTypes): JSX.Element {
                 <Stack space={3}>
                   <Box>
                     <Text variant="h5">Ég sæki um snemmtöku ellilífeyris?</Text>
-                    <Text>Já</Text>
+                    <Text>{user?.almennarField3 === false ? 'Nei' : 'Já'}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Ég sæki um ellilífeyri sjómanna?</Text>
-                    <Text>Já</Text>
+                    <Text>{user?.almennarField4 === false ? 'Nei' : 'Já'}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Ég vil sækja um heimilisuppbót?</Text>
-                    <Text>Já</Text>
+                    <Text>{user?.almennarField5 === false ? 'Nei' : 'Já'}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Ég vil sækja um barnalífeyri?</Text>
-                    <Text>Já</Text>
+                    <Text>{user?.almennarField6 === false ? 'Nei' : 'Já'}</Text>
                   </Box>
                 </Stack>
               </GridColumn>
@@ -114,7 +121,7 @@ function Form8({control}: PropTypes): JSX.Element {
                 <Stack space={3}>
                   <Box>
                     <Text variant="h5">Býr barn hjá umsækjanda?</Text>
-                    <Text>Já</Text>
+                    <Text>{user?.almennarField7 === false ? 'Nei' : 'Já'}</Text>
                   </Box>
                 </Stack>
               </GridColumn>
@@ -122,7 +129,7 @@ function Form8({control}: PropTypes): JSX.Element {
                 <Stack space={3}>
                   <Box>
                     <Text variant="h5">Kennitala barns</Text>
-                    <Text>150110-2220</Text>
+                    <Text>{user?.kennitalaBarns}</Text>
                   </Box>
                 </Stack>
               </GridColumn>
@@ -132,29 +139,35 @@ function Form8({control}: PropTypes): JSX.Element {
                 <Stack space={3}>
                   <Box>
                     <Text variant="h5">Atvinnutekjur</Text>
-                    <Text>0</Text>
+                    <Text>{user?.tekjur1}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">
                       Fjármagnstekjur (leigutekjur, vaxtatekjur, arður og söluhagnaður)
                     </Text>
-                    <Text>0</Text>
+                    <Text>{user?.tekjur2}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Lifeyrissjóðstekjur</Text>
-                    <Text>100.000 ISK</Text>
+                    <Text>{user?.tekjur3} ISK</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Frá hvaða tíma er sótt um greiðslur?</Text>
-                    <Text>01/01/2022</Text>
+                    <Text>
+                      {user?.tekjur4?.toLocaleDateString('en-US', {
+                        day: 'numeric',
+                        month: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Fylgigögn</Text>
-                    <Text>lifeyrirsjodur.pdf, önnurfylgigögn.pdf</Text>
+                    <Text>{user?.fileName}</Text>
                   </Box>
                   <Box>
                     <Text variant="h5">Athugasemdir</Text>
-                    <Text>Þetta er athugasemdir</Text>
+                    <Text>{user?.comments}</Text>
                   </Box>
                 </Stack>
               </GridColumn>

@@ -1,19 +1,7 @@
 import React, {useState} from 'react'
-import {
-  Box,
-  Text,
-  Stack,
-  RadioButton,
-  Tooltip,
-  Inline,
-  GridColumn,
-  GridContainer,
-  GridRow,
-  Select,
-  DatePicker,
-} from '@island.is/ui'
+import {Box, Text, Stack, RadioButton} from '@island.is/ui'
 
-function Form4({control}: any): JSX.Element {
+function Form4({updateUser, user}: any): JSX.Element {
   const [control1, setControl1] = useState<boolean>()
   const [control2, setControl2] = useState<boolean>()
   return (
@@ -27,14 +15,20 @@ function Form4({control}: any): JSX.Element {
               <Box marginRight={4}>
                 <RadioButton
                   label="Já"
-                  onChange={() => setControl1(true)}
-                  checked={control1 === true}
+                  onChange={() => {
+                    updateUser({almennarField3: true})
+                    setControl1(true)
+                  }}
+                  checked={user.almennarField3 === true || control1 === true}
                 />
               </Box>
               <RadioButton
                 label="Nei"
-                onChange={() => setControl1(false)}
-                checked={control1 === false}
+                onChange={() => {
+                  updateUser({almennarField3: false})
+                  setControl1(false)
+                }}
+                checked={user.almennarField3 === false || control1 === false}
               />
             </Box>
           </Box>
@@ -44,14 +38,20 @@ function Form4({control}: any): JSX.Element {
               <Box marginRight={4}>
                 <RadioButton
                   label="Já"
-                  onChange={() => setControl2(true)}
-                  checked={control2 === true}
+                  onChange={() => {
+                    updateUser({almennarField4: true})
+                    setControl2(true)
+                  }}
+                  checked={user.almennarField4 === true || control2 === true}
                 />
               </Box>
               <RadioButton
                 label="Nei"
-                onChange={() => setControl2(false)}
-                checked={control2 === false}
+                onChange={() => {
+                  updateUser({almennarField4: false})
+                  setControl2(false)
+                }}
+                checked={user.almennarField4 === false || control2 === false}
               />
             </Box>
           </Box>

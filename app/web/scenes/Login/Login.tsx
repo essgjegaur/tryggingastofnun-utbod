@@ -5,15 +5,17 @@ import {Box, Text, Input, Logo, Button, Stack} from '@island.is/ui'
 import {AuthContext} from '../../services/'
 
 import * as styles from './Login.treat'
-import {useRouter} from 'next/dist/client/router'
+import {users} from '../../users'
 
 function Login(): JSX.Element {
-  const {handleSubmit, control} = useForm()
-  // const router = useRouter()
+  const {handleSubmit, control} = useForm({mode: 'onSubmit'})
   const context = useContext(AuthContext)
+  const [hasError, setHasError] = useState(false)
   const [loading, setLoading] = useState(false)
   const signIn = handleSubmit(async ({mobileNumber}) => {
-    console.log(mobileNumber)
+    if (!mobileNumber || !users.find(user => user.gsm === mobileNumber)) {
+      return setHasError(true)
+    }
     setLoading(true)
     setTimeout(() => {
       context.login(mobileNumber)
@@ -75,6 +77,8 @@ function Login(): JSX.Element {
                       value={value}
                       backgroundColor="blue"
                       onChange={onChange}
+                      required
+                      errorMessage={!hasError ? '' : 'Símanúmer is wrong'}
                     />
                   )}
                 />
