@@ -12,6 +12,7 @@ import {
   Select,
   DatePicker,
 } from '@island.is/ui'
+import {Controller} from 'react-hook-form'
 
 const countryList = [
   'Afghanistan',
@@ -265,9 +266,10 @@ const countryList = [
   'Zimbabwe',
 ]
 
-function Form3({control}: any): JSX.Element {
+function Form3({control, updateUser}: any): JSX.Element {
   const [control1, setControl1] = useState<boolean>()
   const [control2, setControl2] = useState<boolean>()
+
   return (
     <>
       <Text variant="h2">Almennar upplýsingar</Text>
@@ -279,13 +281,19 @@ function Form3({control}: any): JSX.Element {
               <Box marginRight={4}>
                 <RadioButton
                   label="Já"
-                  onChange={() => setControl1(true)}
+                  onChange={() => {
+                    setControl1(true)
+                    updateUser({almennarField1: true})
+                  }}
                   checked={control1 === true}
                 />
               </Box>
               <RadioButton
                 label="Nei"
-                onChange={() => setControl1(false)}
+                onChange={() => {
+                  setControl1(false)
+                  updateUser({almennarField1: false})
+                }}
                 checked={control1 === false}
               />
             </Box>
@@ -296,14 +304,20 @@ function Form3({control}: any): JSX.Element {
               <Box marginRight={4}>
                 <RadioButton
                   label="Já"
-                  onChange={() => setControl1(true)}
-                  checked={control1 === true}
+                  onChange={() => {
+                    setControl2(true)
+                    updateUser({almennarField2: true})
+                  }}
+                  checked={control2 === true}
                 />
               </Box>
               <RadioButton
                 label="Nei"
-                onChange={() => setControl1(false)}
-                checked={control1 === false}
+                onChange={() => {
+                  setControl2(false)
+                  updateUser({almennarField2: false})
+                }}
+                checked={control2 === false}
               />
             </Box>
           </Box>
@@ -312,16 +326,24 @@ function Form3({control}: any): JSX.Element {
               <GridContainer>
                 <GridRow>
                   <GridColumn span={['12/12', '12/12', '6/12', '6/12']} paddingBottom={3}>
-                    <Select
-                      name="Land"
-                      label="Land"
-                      backgroundColor="blue"
-                      options={countryList.map(country => ({
-                        label: country,
-                        value: country,
-                      }))}
-                      placeholder="Land"
-                      required
+                    <Controller
+                      control={control}
+                      name="land"
+                      render={({field: {onChange, value, name}}) => (
+                        <Select
+                          name={name}
+                          label="Land"
+                          backgroundColor="blue"
+                          options={countryList.map(country => ({
+                            label: country,
+                            value: country,
+                          }))}
+                          placeholder="Land"
+                          required
+                          value={value}
+                          onChange={onChange}
+                        />
+                      )}
                     />
                   </GridColumn>
                 </GridRow>

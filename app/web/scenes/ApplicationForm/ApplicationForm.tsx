@@ -10,30 +10,66 @@ import {
   GridRow,
 } from '@island.is/ui'
 
-import {Form1, Form2, Form3, Form4, Form5, Form6, Form7, Form8, Summary} from './components'
+import {Form1, Form2, Form3, Form4, Form5, Form6, Form7, Form8, Senda, Summary} from './components'
 import {AuthContext} from '../../services'
 
 import * as styles from './ApplicationForm.treat'
 import {useRouter} from 'next/dist/client/router'
 
+const users = [
+  {
+    id: 1,
+    nationalid: '0101407789',
+    type: 'Réttindi erlendis. Ekki full greiðsla',
+    name: 'Hansína Ebenesardóttir',
+    home: '',
+    email: 'hansinae@gmail.com',
+    gsm: '855-1111',
+    phone: '5651111',
+    bankno: '0115-15-001111',
+    spouse: 'no',
+    children: [],
+  },
+  {
+    id: 2,
+    nationalid: '0101502989',
+    type: 'Full íslensk réttindi + heimilisuppbót',
+    name: 'Fimmsundtrýna Jafetsdóttir',
+    home: '',
+    email: '5sund@gmail.com',
+    gsm: '8552222',
+    phone: '5652222',
+    bankno: '0115-15-001112',
+    spouse: 'no',
+    children: ['1301022220'],
+  },
+  {
+    id: 3,
+    nationalid: '0101524929',
+    type: 'Full íslensk réttindi, á maka, ekki heimilisuppb + barn(barnalífeyrir)',
+    name: 'Jón Oddur Bjarnason',
+    home: '',
+    email: 'jonoddurbjarnason@gmail.com',
+    gsm: '8553333',
+    phone: '5653333',
+    bankno: '0115-15-001113',
+    spouse: 'Andrésína Jóakimsdóttir (170180-1239)',
+    children: ['1501102220'],
+  },
+]
 function ApplicationForm(): JSX.Element {
   const context = useContext(AuthContext)
   const router = useRouter()
-  // const navigate = useNavigate()
-  // const {data, loading} = useQuery<Query>(UserQuery, {
-  //   variables: {mobileNumber: context.token},
-  // })
-  // const {user} = data || {}
-  const user = {
+
+  const [user, setUser] = useState({
     step: 1,
     subStep: 0,
     applicationStatus: 'progress',
-  }
+  })
   const userRef = useRef(user)
-  // const [updateApplication] = useMutation<Mutation>(UpdateApplicationMutation)
   const [activeSubSectionIndex, setActiveSubSectionIndex] = useState(0)
   const [activeSectionIndex, setActiveSectionIndex] = useState(0)
-  const {handleSubmit, control, reset} = useForm<any>({
+  const {handleSubmit, control, reset, getValues, trigger, formState} = useForm<any>({
     defaultValues: useMemo(() => user, [user]),
   })
 
@@ -56,6 +92,25 @@ function ApplicationForm(): JSX.Element {
     }
   }, [user, userRef, reset])
 
+  useEffect(() => {
+    const tempUser = users.find(user => user.gsm === context.token)
+    setUser({...user, ...tempUser})
+
+    const {children, bankno, ...defaultValues} = tempUser as any
+    const bankNumber = bankno.split('-')
+    reset({
+      ...defaultValues,
+      childrenNationalid: children[0],
+      bankNumber: bankNumber[0],
+      bankLedger: bankNumber[1],
+      bankCode: bankNumber[2],
+    })
+  }, [context])
+
+  useEffect(() => {
+    console.log('user', user)
+  }, [activeSectionIndex])
+
   const formName = 'Ellilífeyrir'
   const getNextIndexes = () => {
     const currentSection = forms[activeSectionIndex].section
@@ -70,7 +125,17 @@ function ApplicationForm(): JSX.Element {
     return [activeSectionIndex, activeSubSectionIndex]
   }
 
-  const goNext = () => {
+  const goNext = async () => {
+    const valid = await trigger()
+    console.log(formState)
+    const updatedUser = {
+      ...user,
+      ...getValues(),
+    }
+    setUser(updatedUser)
+
+    // localStorage.setItem('user', JSON.stringify(updatedUser))
+
     const [index, subIndex] = getNextIndexes()
     setActiveSectionIndex(index)
     setActiveSubSectionIndex(subIndex)
@@ -99,6 +164,8 @@ function ApplicationForm(): JSX.Element {
     }
   }
 
+  const updateUser = (userFields: any) => setUser({...user, ...userFields})
+
   const forms = [
     {component: <Form1 control={control} />, section: {name: undefined}},
     {component: <Form2 control={control} />, section: {name: 'Persónuupplýsingar'}},
@@ -109,17 +176,17 @@ function ApplicationForm(): JSX.Element {
           {
             type: 'SUB_SECTION',
             name: 'Búa/Starfa erlendis',
-            component: <Form3 control={control} />,
+            component: <Form3 control={control} updateUser={updateUser} />,
           },
           {
             type: 'SUB_SECTION',
             name: 'Annað',
-            component: <Form4 control={control} />,
+            component: <Form4 control={control} updateUser={updateUser} />,
           },
           {
             type: 'SUB_SECTION',
             name: 'Uppbót',
-            component: <Form5 control={control} />,
+            component: <Form5 control={control} updateUser={updateUser} />,
           },
         ],
       },
@@ -127,7 +194,7 @@ function ApplicationForm(): JSX.Element {
     {component: <Form6 control={control} />, section: {name: 'Tekjur'}},
     {component: <Form7 control={control} />, section: {name: 'Fylgiskjöl'}},
     {component: <Form8 control={control} />, section: {name: 'Yfirferð'}},
-    {component: <Form8 control={control} />, section: {name: 'Senda'}},
+    {component: <Senda />, section: {name: 'Senda'}},
   ]
 
   const handleOnSubmit = handleSubmit(async input => {
@@ -146,8 +213,7 @@ function ApplicationForm(): JSX.Element {
     // })
     // if (data?.updateApplication) {
     if (isSubmitting) {
-      console.log('eee')
-      // navigate('/')
+      router.push('/')
     } else {
       goNext()
     }
@@ -231,7 +297,7 @@ function ApplicationForm(): JSX.Element {
                             <Box>
                               <Button icon="arrowForward" type="submit">
                                 {activeSectionIndex === forms.length - 1
-                                  ? 'Senda inn umsókn'
+                                  ? 'Staðfesta'
                                   : 'Halda áfram'}
                               </Button>
                             </Box>
