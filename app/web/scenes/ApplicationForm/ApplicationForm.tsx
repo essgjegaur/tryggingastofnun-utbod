@@ -155,7 +155,7 @@ function ApplicationForm(): JSX.Element {
       section: {name: 'Fylgiskjöl'},
     },
     {component: <Form8 control={control} user={user} />, section: {name: 'Yfirferð'}},
-    {component: <Senda />, section: {name: 'Senda'}},
+    {component: <Senda user={user} />, section: {name: 'Senda'}},
   ]
 
   const handleOnSubmit = handleSubmit(async input => {

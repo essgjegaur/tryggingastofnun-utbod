@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {
   SkeletonLoader,
   Box,
@@ -10,6 +10,7 @@ import {
   LoadingDots,
   LoadingIcon,
 } from '@island.is/ui'
+import {AuthContext} from '../../../../services'
 
 const monthlys: any[] = [
   {
@@ -218,7 +219,7 @@ const monthlys: any[] = [
   },
 ]
 
-function Senda(): JSX.Element {
+function Senda({user}: any): JSX.Element {
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     setTimeout(() => {
@@ -234,7 +235,8 @@ function Senda(): JSX.Element {
       </Stack>
       <Box marginTop={1}>
         <Text>
-        Áætlun þessi er gerð miða við fyrirliggjandi upplýsingar og reiknuð samkvæmt þeim reglum sem gilda í dag.
+          Áætlun þessi er gerð miða við fyrirliggjandi upplýsingar og reiknuð samkvæmt þeim reglum
+          sem gilda í dag.
         </Text>
       </Box>
       <Box marginTop={3}>
@@ -243,57 +245,67 @@ function Senda(): JSX.Element {
         ) : (
           <Accordion singleExpand>
             {monthlys.map((monthDatas, index) => {
-              const monthData = monthDatas['0101502989'] // TODO: change to dynamic kennitala/ID
+              const monthData = monthDatas[user?.nationalid]
               return (
-              <AccordionItem
-                key={index}
-                id="id_1"
-                label={monthData.manudur}
-                labelVariant="h5"
-                visibleContent={
-                  <Text variant="h4" color="blue400">
-                    {monthData.samtals} kr.
-                  </Text>
-                }
-              >
-                <T.Table>
-                  <T.Head>
-                    <T.Row>
-                      <T.HeadData>Greiðsluliður</T.HeadData>
-                      <T.HeadData>Upphæð (kr.)</T.HeadData>
-                    </T.Row>
-                  </T.Head>
-                  <T.Body>
-                    <T.Row>
-                      <T.Data>
-                        <Stack space={1}>
-                          <Text variant="small">Ellilífeyrir</Text>
-                          {monthData.heimilisuppbot && <Text variant="small">Heimilisuppbót</Text>}
-                          {monthData.barnalifeyrir && <Text variant="small">Barnalífeyrir</Text>}
-                        </Stack>
-                      </T.Data>
-                      <T.Data>
-                        <Stack space={1}>
-                          <Text variant="small">{monthData.lifeyrissjodur}</Text>
-                          {monthData.heimilisuppbot && <Text variant="small">{monthData.heimilisuppbot}</Text>}
-                          {monthData.barnalifeyrir && <Text variant="small">{monthData.barnalifeyrir}</Text>}
-                        </Stack>
-                      </T.Data>
-                    </T.Row>
-                  </T.Body>
-                  <T.Foot>
-                    <T.Row>
-                      <T.Data>
-                        <Text variant="h5">Samtals</Text>
-                      </T.Data>
-                      <T.Data>
-                        <Text variant="h5">{monthData.samtals} kr.</Text>
-                      </T.Data>
-                    </T.Row>
-                  </T.Foot>
-                </T.Table>
-              </AccordionItem>
-            )})}
+                <AccordionItem
+                  key={index}
+                  id="id_1"
+                  label={monthDatas.manudur}
+                  labelVariant="h5"
+                  visibleContent={
+                    <Text variant="h4" color="blue400">
+                      {monthData.samtals} kr.
+                    </Text>
+                  }
+                >
+                  <T.Table>
+                    <T.Head>
+                      <T.Row>
+                        <T.HeadData>Greiðsluliður</T.HeadData>
+                        <T.HeadData>Upphæð (kr.)</T.HeadData>
+                      </T.Row>
+                    </T.Head>
+                    <T.Body>
+                      <T.Row>
+                        <T.Data>
+                          <Stack space={1}>
+                            <Text variant="small">Ellilífeyrir</Text>
+                            {monthData.heimilisuppbot && (
+                              <Text variant="small">Heimilisuppbót</Text>
+                            )}
+                            {monthData.barnalifeyrir && <Text variant="small">Barnalífeyrir</Text>}
+                          </Stack>
+                        </T.Data>
+                        <T.Data>
+                          <Stack space={1}>
+                            <Text variant="small">{monthData.lifeyrissjodur}</Text>
+                            {monthData.heimilisuppbot && (
+                              <Text variant="small">{monthData.heimilisuppbot}</Text>
+                            )}
+                            {monthData.barnalifeyrir && (
+                              <Text variant="small">{monthData.barnalifeyrir}</Text>
+                            )}
+                            {monthData.ellilífeyrir && (
+                              <Text variant="small">{monthData.ellilífeyrir}</Text>
+                            )}
+                          </Stack>
+                        </T.Data>
+                      </T.Row>
+                    </T.Body>
+                    <T.Foot>
+                      <T.Row>
+                        <T.Data>
+                          <Text variant="h5">Samtals</Text>
+                        </T.Data>
+                        <T.Data>
+                          <Text variant="h5">{monthData.samtals} kr.</Text>
+                        </T.Data>
+                      </T.Row>
+                    </T.Foot>
+                  </T.Table>
+                </AccordionItem>
+              )
+            })}
           </Accordion>
         )}
       </Box>
