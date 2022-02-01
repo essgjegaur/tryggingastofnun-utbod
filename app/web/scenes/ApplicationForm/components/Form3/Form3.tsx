@@ -13,8 +13,6 @@ import {
   DatePicker,
 } from '@island.is/ui'
 
-import * as styles from './Form3.treat'
-
 const countryList = [
   'Afghanistan',
   'Åland Islands',

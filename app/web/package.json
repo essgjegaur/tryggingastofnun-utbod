@@ -38,6 +38,7 @@
   "devDependencies": {
     "@types/node": "^14.14.35",
     "@types/react": "^17.0.3",
+    "@types/react-datepicker": "^4.3.4",
     "eslint": "8.5.0",
     "eslint-config-next": "latest",
     "eslint-plugin-testing-library": "5.0.1",

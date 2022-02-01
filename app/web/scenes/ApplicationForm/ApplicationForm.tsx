@@ -37,7 +37,7 @@ function ApplicationForm(): JSX.Element {
     defaultValues: useMemo(() => user, [user]),
   })
 
-  const removeKey = (obj, key) =>
+  const removeKey = (obj: any, key: any): any =>
     obj !== Object(obj)
       ? obj
       : Array.isArray(obj)
@@ -155,7 +155,7 @@ function ApplicationForm(): JSX.Element {
   })
 
   const getSections = () =>
-    forms.reduce((acc, {section}) => {
+    forms.reduce((acc: any, {section}) => {
       if (!section.name) {
         return acc
       }

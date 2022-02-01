@@ -45,7 +45,7 @@ function Header(): JSX.Element | null {
               </Button>
             }
           >
-            {({closeModal}) => (
+            {({closeModal}: any) => (
               <Box onClick={closeModal}>
                 <Box
                   display="flex"
